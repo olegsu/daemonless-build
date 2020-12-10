@@ -33,4 +33,4 @@ steps:
    image: "olegsucodefresh/kaniko-builder"
    commands:
     - crane auth login index.docker.io -u $DOCKER_HUB_REPOSITORY_USERNAME -p $DOCKER_HUB_REPOSITORY_PASSWORD
-    - crane push /codefresh/volume/image.tar olegsucodefresh/daemonless-build:latest
+    - crane push /codefresh/volume/image.tar $DOCKER_REPOSITRY

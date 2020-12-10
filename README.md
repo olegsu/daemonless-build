@@ -9,5 +9,6 @@ Seems like `kaniko` is not yet production ready product as it suffers from diffe
 This example assumes that the pipeline also configured with the following environment variables to authenticated with Dockerhub
 1. `DOCKER_HUB_REPOSITORY_USERNAME`
 2. `DOCKER_HUB_REPOSITORY_PASSWORD`
+3. `DOCKER_REPOSITRY` - name of the repository to push `IMAGE:TAG`
 
 * In `daemonless/Dockerfile` there is the Dockerfile that the steps in `codefresh.yaml` used, it has both `kaniko` and `crane` binaries
