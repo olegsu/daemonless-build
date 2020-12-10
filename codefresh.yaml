@@ -12,7 +12,7 @@ steps:
     title: "Cloning repository"
     type: "git-clone"
     repo: "https://github.com/olegsu/daemonless-build"
-    revision: "master"
+    revision: "main"
     stage: "clone"
 
   build:
