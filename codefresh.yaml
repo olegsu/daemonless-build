@@ -1,0 +1,36 @@
+# More examples of Codefresh YAML can be found at
+# https://codefresh.io/docs/docs/yaml-examples/examples/
+
+version: "1.0"
+# Stages can help you organize your steps in stages
+stages:
+  - "clone"
+  - "build"
+
+steps:
+  clone:
+    title: "Cloning repository"
+    type: "git-clone"
+    repo: "https://github.com/olegsu/daemonless-build"
+    revision: "master"
+    stage: "clone"
+
+  build:
+    title: "Building Docker image"
+    image: "olegsucodefresh/kaniko-builder"
+    stage: "build"
+    commands:
+    # Notice we have are using --no-push flag authentication bug
+    # https://github.com/GoogleContainerTools/kaniko/issues/1209
+    # So, we need to build the tarball and use crane to push it
+    # --destination=image:latest is used to avoid manifest.json=null bug when --no-push is set
+    # https://github.com/GoogleContainerTools/kaniko/issues/740#issuecomment-531798845
+    - kaniko --context /codefresh/volume/daemonless-build --tarPath /codefresh/volume/image.tar --no-push --destination image:latest
+
+  push:
+   title: "Pushing image"
+   stage: "build"
+   image: "olegsucodefresh/kaniko-builder"
+   commands:
+    - crane auth login index.docker.io -u $DOCKER_HUB_REPOSITORY_USERNAME -p $DOCKER_HUB_REPOSITORY_PASSWORD
+    - crane push /codefresh/volume/image.tar olegsucodefresh/daemonless-build:latest
