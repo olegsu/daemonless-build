@@ -4,3 +4,5 @@ RUN echo "hello world" > /hello
 
 ENTRYPOINT [ "cat" ]
 CMD [ "/hello" ]
+
+
