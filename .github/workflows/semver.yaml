@@ -7,10 +7,11 @@ jobs:
     name: Build
     runs-on: "ubuntu-18.04"
     steps:
+    - uses: actions/checkout@v2
     - uses: olegsu/semver-action@v1
       id: version
       with:
-        version: "1.1.1" # required
+        version_file: "./VERSION" # load version from this file instead of using explicit version
         bump: patch # [patch,minor,major] (patch is default)
     - name: Get the new version
-      run: echo "${{ steps.version.outputs.version }}" # 1.1.2
+      run: echo "${{ steps.version.outputs.version }}" # 0.1.3
